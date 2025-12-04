@@ -41,9 +41,20 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def create_app():
+    load_dotenv()
     app = Flask(__name__)
-    CORS(app)  # allow frontend requests
-    app.config["JSON_SORT_KEYS"] = False
+    app.config["SECRET_KEY"] = os.getenv("JWT_SECRET", "default-secret")
+
+    # --- CORS SETTINGS ---
+    CORS(app,
+         resources={r"/*": {"origins": [
+             "http://localhost:5173",          # local dev
+             "https://caai.vercel.app"         # your Vercel frontend
+         ]}},
+         supports_credentials=True)
+    
+    # CORS(app)  # allow frontend requests
+    # app.config["JSON_SORT_KEYS"] = False
 
     # ---- REGISTER BLUEPRINTS ----
     from app.routes.auth_routes import bp as auth_bp
