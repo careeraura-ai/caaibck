@@ -48,7 +48,7 @@ def create_app():
     # --- CORS SETTINGS ---
     CORS(app,
          resources={r"/*": {"origins": [
-             "http://localhost:5173",          # local dev
+             https://career-aura-ai.onrender.com,          # local dev
              "https://caai.vercel.app"         # your Vercel frontend
          ]}},
          supports_credentials=True)
